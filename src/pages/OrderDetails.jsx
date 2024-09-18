@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { FaPlus, FaTimes } from 'react-icons/fa';
-import toast from "react-hot-toast"
+import toast from "react-hot-toast";
 import Items from '../components/Items';
+
 const OrderDetails = () => {
   const { state } = useLocation();
  
-
-const [grandTotal, setGrandTotal] = useState(0);
+  // State for grand total, items, and coupon
+  const [grandTotal, setGrandTotal] = useState(0);
   const [items, setItems] = useState([]); // To store added items
   const [showModal, setShowModal] = useState(false); // Modal visibility
   const [newItem, setNewItem] = useState({
@@ -17,23 +18,24 @@ const [grandTotal, setGrandTotal] = useState(0);
     unitAmount: '',
     totalAmount: '',
   });
+  
+  const [coupon, setCoupon] = useState(''); // State for coupon code
+  const [discount, setDiscount] = useState(0); // Discount value
+  const [isCouponApplied, setIsCouponApplied] = useState(false); // To avoid multiple coupon application
 
   // Handle input changes for form fields
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewItem((prevItem) => ({ ...prevItem, [name]: value }));
-
   };
 
   // Handle form submission
   const handleAddItem = (e) => {
     e.preventDefault();
-    // Calculate total amount 
     const totalAmount = newItem.quantity * newItem.unitAmount;
     setGrandTotal(prevTotal => prevTotal + totalAmount);
     setItems([...items, { ...newItem, totalAmount }]);
-    toast.success("Item added successfully.")
-    // Reset form fields after adding
+    toast.success("Item added successfully.");
     setNewItem({
       name: '',
       description: '',
@@ -41,8 +43,25 @@ const [grandTotal, setGrandTotal] = useState(0);
       unitAmount: '',
       totalAmount: '',
     });
-
     setShowModal(false); // Close modal after adding
+  };
+
+  // Handle coupon application
+  const handleApplyCoupon = () => {
+    if (isCouponApplied) {
+      toast.error("Coupon has already been applied.");
+      return;
+    }
+
+    if (coupon === 'DISCOUNT10') {
+      const discountValue = grandTotal * 0.10; // 10% discount
+      setDiscount(discountValue);
+      setGrandTotal(prevTotal => prevTotal - discountValue);
+      toast.success("Coupon applied successfully. 10% discount applied!");
+      setIsCouponApplied(true);
+    } else {
+      toast.error("Invalid coupon code.");
+    }
   };
 
   // Handle modal open/close
@@ -73,18 +92,35 @@ const [grandTotal, setGrandTotal] = useState(0);
           <p><strong>Order Details:</strong> {state.order.body}</p>
           <p><strong>Order Status:</strong> {state.order.status}</p>
           <p><strong>Payment Status:</strong> {state.order.paymentStatus}</p>
-
-
         </div>
 
         {/* List of Added Items */}
         <Items items={items} />
 
-         {/* Display Grand Total */}
-         <div className="mt-4">
-          <h3 className="text-xl font-semibold">Grand Total: &#8377;{grandTotal.toFixed(2)}</h3>
+        {/* Apply Coupon Section */}
+        <div className="mt-4 flex items-center">
+          <input
+            type="text"
+            placeholder="Enter coupon code"
+            value={coupon}
+            onChange={(e) => setCoupon(e.target.value)}
+            className="p-2 border rounded mr-2"
+            disabled={isCouponApplied}
+          />
+          <button
+            onClick={handleApplyCoupon}
+            className="bg-[var(--red)] text-white px-4 py-2 rounded"
+            disabled={items.length === 0 || grandTotal === 0 || isCouponApplied}
+          >
+            Apply Coupon
+          </button>
         </div>
 
+        {/* Display Grand Total */}
+        <div className="mt-4">
+          <h3 className="text-xl font-semibold">Grand Total: &#8377;{grandTotal.toFixed(2)}</h3>
+          {discount > 0 && <p className="text-green-500">Discount Applied: &#8377;{discount.toFixed(2)}</p>}
+        </div>
       </div>
 
       {/* Modal for Adding Items */}
