@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import moment from 'moment';
-import { FaCheck, FaTimes, FaSave } from 'react-icons/fa';
-
-
+import { FaCheck, FaTimes } from 'react-icons/fa';
 
 
 const Order = ({ order }) => {
@@ -15,7 +13,7 @@ const Order = ({ order }) => {
         navigate(`/order-details/${orderId}`, { state: { order: order } });
     };
 
-  
+
 
     return (
         <div className='bg-gray-200 my-2 p-2 rounded-lg cursor-pointer hover:bg-gray-300 grid grid-cols-1 sm:grid-cols-5 items-center gap-3 overflow-x-auto'
@@ -36,7 +34,7 @@ const Order = ({ order }) => {
                     className="flex items-center gap-1 cursor-pointer text-red-500"
                 >
                     <FaTimes size={16} />
-                    <span className="text-md">Cancel</span>
+                    <span className="text-md">Decline</span>
                 </button>
 
                 <button
@@ -44,11 +42,11 @@ const Order = ({ order }) => {
                     className="flex items-center gap-1 cursor-pointer text-green-500"
                 >
                     <FaCheck size={16} />
-                    <span className="text-md">Confirm</span>
+                    <span className="text-md">Accept</span>
                 </button>
 
             </div>
-           
+
 
 
         </div>

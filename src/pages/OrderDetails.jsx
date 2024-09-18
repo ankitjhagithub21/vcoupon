@@ -1,28 +1,168 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-
-
-const OrderDetails = (order) => {
-  //const { loading, orders } = useFetchOrders();
+import { FaPlus, FaTimes } from 'react-icons/fa';
+import toast from "react-hot-toast"
+import Items from '../components/Items';
+const OrderDetails = () => {
   const { state } = useLocation();
-  const { orderId } = useParams(); // Retrieve the orderId from the URL
-  //const order = orders.find((o) => o.orderId === orderId); // Find the order based on orderId
+ 
 
-  if (!order) {
-    return <p className='text-center text-xl'>Order not found!</p>;
+const [grandTotal, setGrandTotal] = useState(0);
+  const [items, setItems] = useState([]); // To store added items
+  const [showModal, setShowModal] = useState(false); // Modal visibility
+  const [newItem, setNewItem] = useState({
+    name: '',
+    description: '',
+    quantity: '',
+    unitAmount: '',
+    totalAmount: '',
+  });
+
+  // Handle input changes for form fields
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewItem((prevItem) => ({ ...prevItem, [name]: value }));
+
+  };
+
+  // Handle form submission
+  const handleAddItem = (e) => {
+    e.preventDefault();
+    // Calculate total amount 
+    const totalAmount = newItem.quantity * newItem.unitAmount;
+    setGrandTotal(prevTotal => prevTotal + totalAmount);
+    setItems([...items, { ...newItem, totalAmount }]);
+    toast.success("Item added successfully.")
+    // Reset form fields after adding
+    setNewItem({
+      name: '',
+      description: '',
+      quantity: '',
+      unitAmount: '',
+      totalAmount: '',
+    });
+
+    setShowModal(false); // Close modal after adding
+  };
+
+  // Handle modal open/close
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
+
+  if (!state || !state.order) {
+    return <p className="text-center text-xl">Order not found!</p>;
   }
 
   return (
-    <section className='p-5'>
-      <div className='max-w-3xl mx-auto'>
-        <h2 className='text-2xl font-bold mb-4'>Order Details for {state.order.orderId}</h2>
-        <div className='bg-white p-4 border rounded-lg shadow-md'>
+    <section className="p-5">
+      <div className="mt-4 flex items-center justify-end mb-5">
+        <button
+          className="flex items-center bg-[var(--red)] text-white px-4 py-2 rounded"
+          onClick={toggleModal}
+        >
+          <FaPlus className="mr-2" /> Add Item
+        </button>
+      </div>
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-2xl font-bold mb-4">
+          Order Details for {state.order.orderId}
+        </h2>
+        <div className="p-4 border-b">
           <p><strong>Customer:</strong> {state.order.customerName}</p>
           <p><strong>Order Details:</strong> {state.order.body}</p>
           <p><strong>Order Status:</strong> {state.order.status}</p>
           <p><strong>Payment Status:</strong> {state.order.paymentStatus}</p>
+
+
         </div>
+
+        {/* List of Added Items */}
+        <Items items={items} />
+
+         {/* Display Grand Total */}
+         <div className="mt-4">
+          <h3 className="text-xl font-semibold">Grand Total: &#8377;{grandTotal.toFixed(2)}</h3>
+        </div>
+
       </div>
+
+      {/* Modal for Adding Items */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-5">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-semibold">Add New Item</h3>
+              <button onClick={toggleModal}>
+                <FaTimes className="text-xl" />
+              </button>
+            </div>
+            <form onSubmit={handleAddItem}>
+              <div className="mb-4">
+                <label className="block font-bold mb-1">Item Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={newItem.name}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block font-bold mb-1">Description</label>
+                <textarea
+                  name="description"
+                  value={newItem.description}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block font-bold mb-1">Quantity</label>
+                <input
+                  type="number"
+                  name="quantity"
+                  value={newItem.quantity}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block font-bold mb-1">Unit Amount</label>
+                <input
+                  type="number"
+                  name="unitAmount"
+                  value={newItem.unitAmount}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block font-bold mb-1">Total Amount</label>
+                <input
+                  type="number"
+                  name="totalAmount"
+                  value={newItem.quantity * newItem.unitAmount} // Calculating total amount
+                  readOnly
+                  className="w-full p-2 border rounded bg-gray-100"
+                />
+              </div>
+              <div className="flex justify-end">
+                <button
+                  type="submit"
+                  className="bg-[var(--red)] text-white px-4 py-2 rounded"
+                >
+                  Add Item
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
