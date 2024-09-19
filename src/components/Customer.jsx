@@ -16,8 +16,8 @@ const Customer = ({ customer }) => {
 
   // Handle input changes
   const handleInputChange = (e) => {
-    const { fullName, value } = e.target;
-    setEditedCustomer({ ...editedCustomer, [fullName]: value });
+    const { name, value } = e.target;
+    setEditedCustomer({ ...editedCustomer, [name]: value });
   };
 
   // Save changes
@@ -43,11 +43,11 @@ const Customer = ({ customer }) => {
         {isEditing ? (
           <input
             type="text"
-            name="name"
+            name="fullName"
             fullName="fullName"
             value={editedCustomer.fullName}
             onChange={handleInputChange}
-            className="border p-2 rounded w-full"
+            className="border p-2 rounded w-full bg-white outline-none"
           />
         ) : (
           <h3 className="font-semibold text-xl">{customer.fullName}</h3>
@@ -58,10 +58,10 @@ const Customer = ({ customer }) => {
         {isEditing ? (
           <input
             type="text"
-            fullName="mobile"
+            name="mobile"
             value={editedCustomer.mobile}
             onChange={handleInputChange}
-            className="border p-2 rounded w-full"
+            className="border p-2 rounded w-full bg-white outline-none"
           />
         ) : (
           <p>{customer.mobile}</p>

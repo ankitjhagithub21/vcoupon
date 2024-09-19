@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import toast from "react-hot-toast"
 import Item from '../components/Item';
+import { FaPlus } from 'react-icons/fa';
 
 
 const OrderDetails = () => {
@@ -19,9 +20,11 @@ const OrderDetails = () => {
     description: "",
     quantity: "",
     unitAmount: "",
+    unit:"",
     total: 0
 
   })
+  
   const handleAddNewItem = () => {
 
     setItems((prevItems) => [...prevItems, item])
@@ -68,10 +71,12 @@ const OrderDetails = () => {
   }
 
   return (
-    <section className="p-5">
+    <section className="p-5 text-gray-800 min-h-screen">
       <div className="max-w-7xl mx-auto">
         <div className='mb-5 flex justify-end'>
-          <button className='px-4 py-2 bg-[var(--red)] text-white rounded-lg' onClick={handleAddNewItem}>Add Item</button>
+          <button className='px-4 py-2 bg-[var(--red)] text-white rounded-lg flex items-center gap' onClick={handleAddNewItem}>
+            <FaPlus/>
+            Add Item</button>
         </div>
         <h2 className="text-2xl font-bold mb-4">
           Order Details for {state.order.orderId}
@@ -85,7 +90,7 @@ const OrderDetails = () => {
         </div>
 
         {/* items list */}
-        <h2 className='font-bold text-2xl'>Item List</h2>
+        <h2 className='font-bold text-2xl mt-10'>Item List</h2>
         {
           items.length === 0 ? <p>No item added.</p> : <div>
             {
@@ -106,7 +111,7 @@ const OrderDetails = () => {
             placeholder="Enter coupon code"
             value={coupon}
             onChange={(e) => setCoupon(e.target.value)}
-            className="p-2 border rounded mr-2"
+            className="p-2 border rounded mr-2 bg-transparent"
             disabled={isCouponApplied}
           />
           <button

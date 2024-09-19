@@ -41,21 +41,21 @@ const Orders = () => {
   return (
     <section className='p-5'>
       <div className='max-w-7xl mx-auto'>
-        <h2 className='text-2xl font-bold mb-4'>Orders List</h2>
+        <h2 className='text-2xl font-bold mb-4 text-gray-800'>Orders List</h2>
 
-        <div className='flex items-center border rounded-lg my-5 px-2 shadow-lg'>
+        <div className='flex items-center border rounded-lg my-5 px-2  bg-gray-300 text-gray-800'>
           <input
             type='text'
             placeholder='Search order'
             value={searchTerm}
             onChange={handleSearchChange}
-            className='w-full p-2 outline-none text-lg'
+            className='w-full p-2 outline-none text-lg bg-transparent '
           />
           <GoSearch size={20} />
         </div>
 
         {/* Orders List Header */}
-        <div className='lg:grid hidden font-bold mb-3 text-xl grid-cols-1 sm:grid-cols-5 items-center gap-3'>
+        <div className='lg:grid hidden font-bold mb-3 text-xl grid-cols-1 sm:grid-cols-5 items-center gap-3 text-gray-800'>
           <h2>OrderId</h2>
           <h2>Created At</h2>
           <h2>Customer Name</h2>
@@ -64,13 +64,13 @@ const Orders = () => {
         </div>
 
         {/* Orders List */}
-        <div className='pb-14'>
+        <div className='pb-14 text-gray-800'>
           {currentOrders.length > 0 ? (
             currentOrders.map((order, index) => (
               <Order key={index} order={order} />
-            ))
+            )).sort()
           ) : (
-            <p className='col-span-full text-center text-gray-500 py-4'>
+            <p className='col-span-full text-center text-gray-800 py-4'>
               No orders found.
             </p>
           )}

@@ -8,6 +8,7 @@ import AddCoupon from './AddCoupon'
 import Coupons from './Coupons'
 import OrderDetails from './OrderDetails'
 import Settings from './Settings'
+import Footer from '../components/Footer'
 
 
 
@@ -25,6 +26,7 @@ const Dashboard = () => {
         <Route path='/add-coupon' element={<AddCoupon/>}/>
         <Route path='/settings' element={<Settings/>}/>
       </Routes>
+      <Footer/>
     </BrowserRouter>
   )
 }

@@ -5,8 +5,12 @@
     --white: #ffffff;
 }
 
-* {
+button{
     outline: none;
+}
+
+section{
+    min-height: 100vh;
 }
 
 ::-webkit-scrollbar {
@@ -15,7 +19,12 @@
 
 body {
     font-family: "Outfit", sans-serif;
+    background-color: white;
+    min-height: 100vh;
+    position: relative;
+    width: 100%;
 }
+
 
 .custom-shadow {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -56,6 +65,24 @@ body {
     animation: rotation 1s linear infinite;
 }
 
+
+form input{
+    background: transparent;
+    color: #424242;
+    
+}
+textarea{
+    background:transparent;
+    color: #424242;
+}
+.input{
+    background: transparent !important;
+    /* color: #424242 !important; */
+}
+.textarea{
+     background: transparent !important;
+}
+
 @keyframes rotation {
     0% {
         transform: rotate(0deg);
@@ -65,4 +92,3 @@ body {
         transform: rotate(360deg);
     }
 }
-

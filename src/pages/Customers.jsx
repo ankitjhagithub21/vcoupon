@@ -52,19 +52,19 @@ const Customers = () => {
     <section className="p-3 relative min-h-screen w-full">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between flex-wrap">
-          <div className="flex items-center border rounded-lg px-2 shadow-lg max-w-xl w-full">
+          <div className="flex items-center border rounded-lg px-2 shadow-lg max-w-xl w-full bg-gray-200">
             <input
               type="text"
               placeholder="Search customer"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full p-2 outline-none text-lg"
+              className="w-full p-2 outline-none bg-transparent text-lg text-gray-800"
             />
             <GoSearch size={20} />
           </div>
           <div className="flex items-center gap-3 justify-start py-3">
             <select
-              className="border rounded-lg p-2"
+              className="border rounded-lg p-2 bg-white text-gray-800"
               value={sortOrder}
               onChange={(e) => setSortOrder(e.target.value)}
             >
@@ -82,7 +82,7 @@ const Customers = () => {
           </div>
         </div>
 
-        <div className="border-b my-2 p-3 rounded-lg hidden md:grid grid-cols-3 items-center gap-3 overflow-x-auto">
+        <div className="border-b my-2 p-3 rounded-lg hidden md:grid grid-cols-3 items-center gap-3 overflow-x-auto text-gray-800">
           <div className="whitespace-nowrap">
             <h3 className="font-semibold text-xl">Name</h3>
           </div>
@@ -94,13 +94,13 @@ const Customers = () => {
           </div>
         </div>
 
-        <div className="pb-10">
+        <div className="pb-10 text-gray-800">
           {currentCustomers.length > 0 ? (
             currentCustomers.map((customer) => (
               <Customer key={customer.id} customer={customer} />
             ))
           ) : (
-            <p className="col-span-full text-center text-xl text-gray-500">
+            <p className="col-span-full text-center text-xl text-gray-800">
               No customers found.
             </p>
           )}

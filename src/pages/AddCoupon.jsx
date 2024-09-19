@@ -50,7 +50,7 @@ const AddCoupon = () => {
         className="flex flex-col gap-4 p-5 bg-white custom-shadow rounded-lg w-full max-w-xl mx-auto"
         onSubmit={handleFormSubmit}
       >
-        <h2 className='text-2xl font-bold'>Add New Coupon</h2>
+        <h2 className='text-2xl font-bold text-gray-800'>Add New Coupon</h2>
 
         {/* Coupon Code Field */}
         <div className="flex flex-col">

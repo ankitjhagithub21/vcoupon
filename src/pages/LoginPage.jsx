@@ -37,7 +37,10 @@ const LoginPage = () => {
             if (response.status === 200) {
                 localStorage.setItem('token', data.token)
                 dispatch(setUser({
-                    username: data.username,        
+                    id: data.id,
+                    username: data.username,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
 
                 }))
 
@@ -61,14 +64,14 @@ const LoginPage = () => {
         <section className='h-screen w-full login'>
             <div className='overlay flex items-center justify-center p-5'>
                 <div className='w-full max-w-md rounded-3xl glass p-5 custom-shadow'>
-                    <img src="/user.png" alt="user" className='w-20 mb-5 mx-auto -mt-16 bg-white rounded-full' />
+                    <img src="./user.png" alt="user" className='w-20 mb-5 mx-auto -mt-16 bg-white rounded-full' />
                     <form className='flex flex-col gap-3' onSubmit={handleFormSubmit}>
                         {/* Input field for email */}
                         <input
                             type='text'
                             name='username'
                             placeholder='Enter your username'
-                            className=' px-4 py-2 w-full  text-lg bg-[#395173] text-white'
+                            className=' px-4 py-2 w-full  text-lg bg-[#395173] text-white outline-none'
                             required
                         />
 
@@ -78,7 +81,7 @@ const LoginPage = () => {
                             type='password'
                             name='password'
                             placeholder='Enter your password'
-                            className='px-4 py-2 w-full  text-lg bg-[#395173] text-white'
+                            className='px-4 py-2 w-full  text-lg bg-[#395173] text-white outline-none'
                             required
                         />
                         <div className='flex items-center text-sm justify-between text-[#244a8f]'>

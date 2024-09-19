@@ -54,7 +54,7 @@ const AddCustomer = () => {
         className="flex flex-col gap-4 p-5 bg-white shadow-lg rounded-lg w-full max-w-xl mx-auto"
         onSubmit={handleFormSubmit}
       >
-        <h2 className='text-2xl font-bold'>Add New Customer</h2>
+        <h2 className='text-2xl font-bold text-gray-800'>Add New Customer</h2>
 
         {/* Full Name Field */}
         <div className="flex flex-col">
@@ -70,6 +70,7 @@ const AddCustomer = () => {
             id="fullName"
             placeholder="Enter customer name"
             className="p-2 border border-pink-300 rounded-md outline-none focus:border-pink-600"
+            autoComplete='off'
             required
           />
         </div>
@@ -88,6 +89,7 @@ const AddCustomer = () => {
             id="mobile"
             placeholder="Enter mobile number"
             className="p-2 border border-pink-400 rounded-md outline-none focus:border-pink-600"
+            autoComplete='off'
             required
           />
         </div>

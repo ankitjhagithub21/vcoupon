@@ -28,11 +28,11 @@ const Navbar = () => {
     dispatch(setUser(null));
     localStorage.removeItem('token')
      // Clear user state
-    toast.success("Logout successful."); // Show success message
+    toast.success("Logout successfull."); // Show success message
   };
 
   return (
-    <nav className="bg-[var(--red)] text-white py-4 custom-shadow">
+    <nav className="bg-[var(--red)] text-white py-2 custom-shadow">
       <div className="container mx-auto flex items-center justify-between px-3">
         {/* Mobile menu button */}
         <button onClick={() => setIsOpen(true)} className="md:hidden block">
@@ -52,7 +52,7 @@ const Navbar = () => {
                 key={link.id}
                 to={link.path}
                 className={`${link.path === currentPath ? 'bg-white text-[var(--red)]' : ''
-                  } px-3 py-2 rounded-md`} // Add padding and rounded corners for better UI
+                  } px-3 py-2 rounded-md hover:bg-white hover:text-[var(--red)]`} // Add padding and rounded corners for better UI
               >
                 {link.name}
               </Link>
@@ -74,7 +74,7 @@ const Navbar = () => {
               <p>{user.username}</p>
 
               <hr className="w-full" />
-              <Link to={"/settings"}>Settings</Link>
+              <Link to={"/settings"} className='hover:bg-gray-200 w-full p-1 rounded-lg'>Settings</Link>
               <hr className="w-full" />
               <button
                 className="bg-[var(--red)] w-full rounded-lg py-1 text-white"
@@ -90,7 +90,7 @@ const Navbar = () => {
 
         {/* Mobile menu (shown when isOpen is true) */}
         <div
-          className={`absolute w-full mobile-menu h-full bg-[var(--red)] top-0 ${isOpen ? 'left-0' : '-left-full'} z-50 gap-5 flex flex-col items-center justify-center md:hidden`}
+          className={`fixed w-full mobile-menu h-screen bg-[var(--red)] top-0 ${isOpen ? 'left-0' : '-left-full'} z-50 gap-5 flex flex-col items-center justify-center md:hidden`}
         >
           <button onClick={() => setIsOpen(false)} className="absolute top-2 left-2">
             <MdClose size={25} />

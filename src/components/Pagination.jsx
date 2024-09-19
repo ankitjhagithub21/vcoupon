@@ -8,7 +8,7 @@ const Pagination = ({ currentPage, total, perPage, paginate }) => {
   }
 
   return (
-    <div className="flex justify-center fixed bottom-0 p-2 z-40 w-full left-0 bg-white">
+    <div className="flex justify-center p-2 z-40 w-full left-0 bg-white">
       <nav className="flex justify-center">
         <ul className="flex space-x-2 items-center">
           {pageNumbers.map((number) => (
