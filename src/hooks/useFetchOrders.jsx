@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 const useFetchOrders = () => {
   const token = localStorage.getItem('token') || null;
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const getOrders = async () => {
       try {
@@ -21,18 +19,16 @@ const useFetchOrders = () => {
         const data = await res.json();
         setOrders(data);
       } catch (error) {
-        console.error(error); // Log the error correctly
-      } finally {
-        setLoading(false);
-      }
+        console.error(error); 
+      } 
     };
 
     getOrders();
   }, [token]); 
   return {
-    loading,
     orders,
-  };
+    setOrders
+  }
 };
 
 export default useFetchOrders;

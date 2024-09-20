@@ -1,12 +1,12 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import Order from '../components/Order';
-import useFetchOrders from '../hooks/useFetchOrders';
 import Loader from '../components/Loader';
 import { GoSearch } from 'react-icons/go';
 import Pagination from '../components/Pagination'; 
+import { useGlobal } from '../context/GlobalContext';
 
 const Orders = () => {
-  const { loading, orders = [] } = useFetchOrders();
+  const { orders,setOrders} = useGlobal();
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 10;
@@ -34,9 +34,6 @@ const Orders = () => {
     setCurrentPage(1); // Reset to page 1 when search term changes
   }, [searchTerm]);
 
-  if (loading) {
-    return <Loader />;
-  }
 
   return (
     <section className='p-5'>

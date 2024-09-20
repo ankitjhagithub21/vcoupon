@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 const useFetchCoupons = () => {
   const token = localStorage.getItem('token') || null;
   const [coupons, setCoupons] = useState([]);
-  const [loading, setLoading] = useState(true);
+ 
 
   useEffect(() => {
     const getCoupons = async () => {
@@ -22,17 +22,15 @@ const useFetchCoupons = () => {
         setCoupons(data);
       } catch (error) {
         console.error(error); 
-      } finally {
-        setLoading(false);
-      }
+      } 
     };
 
     getCoupons();
   }, [token]); 
-  return {
-    loading,
-    coupons,
-  };
+ return {
+  coupons,
+  setCoupons
+ }
 };
 
 export default useFetchCoupons;

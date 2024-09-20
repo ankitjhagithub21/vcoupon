@@ -4,12 +4,13 @@ import { FaUserPlus } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import Customer from '../components/Customer';
 import Pagination from '../components/Pagination';
-import useFetchCustomers from '../hooks/useFetchCustomers';
+import { useGlobal } from '../context/GlobalContext';
 import Loader from '../components/Loader';
 
 
 const Customers = () => {
-  const { loading, customers } = useFetchCustomers();
+  
+  const { customers,loading } = useGlobal();
   const navigate = useNavigate();
   
   const [searchTerm, setSearchTerm] = useState('');
@@ -44,10 +45,10 @@ const Customers = () => {
     setCurrentPage(1);
   }, [searchTerm, sortOrder]);
 
-  if (loading) {
-    return <Loader />;
-  }
-
+  
+if(loading){
+  return <Loader/>
+}
   return (
     <section className="p-3 relative min-h-screen w-full">
       <div className="max-w-7xl mx-auto">
